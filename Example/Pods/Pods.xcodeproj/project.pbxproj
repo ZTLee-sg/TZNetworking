@@ -121,7 +121,6 @@
 		6D3071F804219E6A520372754BA9F09C /* URLConvertible+URLRequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A62A1DA1ACCE0E8590FF38B8C6400A /* URLConvertible+URLRequestConvertible.swift */; };
 		6E68FC477FEBC6BAF22C2ABC21F62A84 /* Moya+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCDF9405CCAE6C0F18427D493C64FA1 /* Moya+Alamofire.swift */; };
 		6F6035B5C4C77BFC2AEF533800D304F7 /* PrettyDynamicTypeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6217CB93EB222F4BCF4271265D14DCE5 /* PrettyDynamicTypeSyntax.swift */; };
-		70E69C662EF16515004AE752 /* TZRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70E69C652EF16515004AE752 /* TZRequestModel.swift */; };
 		76085620117E839C450E794DB3773D79 /* FBSnapshotTestCasePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = ECCF9C5D8753FF2B77A1B8B95833E033 /* FBSnapshotTestCasePlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		766F6429966FBFF2E2E6A2991BDAFDA9 /* UIImage+Diff.m in Sources */ = {isa = PBXBuildFile; fileRef = 648CBAC35BCC83F7F9E8DD0052DD6E29 /* UIImage+Diff.m */; };
 		7933EDD15F245D28BE5D99E203E9BD1F /* DataStreamRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E25CD8BED574317C4F5A9F9919B5284 /* DataStreamRequest.swift */; };
@@ -526,8 +525,12 @@
 		6EDEF570C20519D2856ED8072131D60C /* String+C99ExtendedIdentifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+C99ExtendedIdentifier.swift"; path = "Sources/Quick/String+C99ExtendedIdentifier.swift"; sourceTree = "<group>"; };
 		6F5A2B36B165B7B37985C58A0BC56DB2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		7000C170172673B803865E4769470EC0 /* FBSnapshotTestCase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestCase.m; path = FBSnapshotTestCase/FBSnapshotTestCase.m; sourceTree = "<group>"; };
-		70E69C632EF164E7004AE752 /* TZNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZNetworking.swift; sourceTree = "<group>"; };
-		70E69C652EF16515004AE752 /* TZRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZRequestModel.swift; sourceTree = "<group>"; };
+		70E69C6B2EF29B19004AE752 /* TZNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TZNetworking.swift; path = TZNetworking/Classes/TZNetworking.swift; sourceTree = "<group>"; };
+		70E69C6C2EF29B19004AE752 /* TZNetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZNetworkReachability.swift; sourceTree = "<group>"; };
+		70E69C6D2EF29B19004AE752 /* TZNetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZNetworkConfig.swift; sourceTree = "<group>"; };
+		70E69C6F2EF29B68004AE752 /* TZNetworkLoggerPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZNetworkLoggerPlugin.swift; sourceTree = "<group>"; };
+		70E69C702EF29CFC004AE752 /* TZUserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZUserAPI.swift; sourceTree = "<group>"; };
+		70E69C712EF2A43D004AE752 /* TZFileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TZFileUtils.swift; sourceTree = "<group>"; };
 		70FF8EA9D2BE69974824D6C9B8E11AF2 /* Pods-TZNetworking_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-TZNetworking_Tests-umbrella.h"; sourceTree = "<group>"; };
 		723902087105C1A00947819D762C896C /* FBSnapshotTestController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSnapshotTestController.m; path = src/iOSSnapshotTestCaseCore/FBSnapshotTestController.m; sourceTree = "<group>"; };
 		737537C7CD3CB1DD747AE65D743DBFA6 /* UIImage+Snapshot.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Snapshot.m"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.m"; sourceTree = "<group>"; };
@@ -965,8 +968,8 @@
 		65CF81F8E65E03BB5AC2CF1994931A88 /* TZNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				70E69C642EF164F7004AE752 /* Model */,
-				70E69C632EF164E7004AE752 /* TZNetworking.swift */,
+				70E69C6B2EF29B19004AE752 /* TZNetworking.swift */,
+				70E69C6E2EF29B19004AE752 /* Utils */,
 				8E1715E7EF8E88F38E9A78EECF059635 /* Pod */,
 				63F10C6B4B1B9B67FAFF33B06AD1DED3 /* Support Files */,
 			);
@@ -1054,12 +1057,17 @@
 			name = "Development Pods";
 			sourceTree = "<group>";
 		};
-		70E69C642EF164F7004AE752 /* Model */ = {
+		70E69C6E2EF29B19004AE752 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				70E69C652EF16515004AE752 /* TZRequestModel.swift */,
+				70E69C6C2EF29B19004AE752 /* TZNetworkReachability.swift */,
+				70E69C6D2EF29B19004AE752 /* TZNetworkConfig.swift */,
+				70E69C6F2EF29B68004AE752 /* TZNetworkLoggerPlugin.swift */,
+				70E69C712EF2A43D004AE752 /* TZFileUtils.swift */,
+				70E69C702EF29CFC004AE752 /* TZUserAPI.swift */,
 			);
-			path = Model;
+			name = Utils;
+			path = TZNetworking/Classes/Utils;
 			sourceTree = "<group>";
 		};
 		7C17CC68744F59E602BD5D8DEAF172C6 /* Quick */ = {
@@ -1826,7 +1834,6 @@
 				39D449220194AE1CD884069FBF6F735D /* URLSessionConfiguration+Alamofire.swift in Sources */,
 				5746320BBB67E457AF4C4EE5A2D32799 /* Validation.swift in Sources */,
 				FAB703884AC7E3E527AB50FB9001276B /* WebSocketRequest.swift in Sources */,
-				70E69C662EF16515004AE752 /* TZRequestModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
