@@ -4,6 +4,7 @@ platform :ios, '10.0'
 
 target 'TZNetworking_Example' do
   pod 'TZNetworking', :path => '../'
+#  pod 'Moya'
 
   target 'TZNetworking_Tests' do
     inherit! :search_paths

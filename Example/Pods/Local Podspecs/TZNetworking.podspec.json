@@ -1,0 +1,27 @@
+{
+  "name": "TZNetworking",
+  "version": "0.1.0",
+  "summary": "A short description of TZNetworking.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Leery TT/TZNetworking",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Leery TT": "562265055@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/Leery TT/TZNetworking.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "TZNetworking/Classes/**/*",
+  "dependencies": {
+    "Moya": [
+
+    ]
+  }
+}
