@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import Alamofire
 import Moya
 
-static let TOKEN = "token"
+let TOKEN = "token"
 
 // MARK: - 上传文件模型
-struct UploadFile {
+public struct UploadFile {
     /// 文件数据（Data/URL二选一）
     let data: Data?
     let fileURL: URL?
@@ -42,7 +43,7 @@ struct UploadFile {
 }
 
 /// 基础API协议（遵循Moya.TargetType）
-protocol BaseAPI: TargetType {
+public protocol BaseAPI: TargetType {
     /// 基础URL（支持多环境切换）
     var baseURL: URL { get }
     /// 请求路径
@@ -85,29 +86,21 @@ extension BaseAPI {
     var task: Task {
         // 1. 优先处理文件上传
         if let files = uploadFiles, !files.isEmpty {
-            return .uploadMultipart(files.map { file in
-                let provider: MultipartFormData.FormDataProvider
+            let result = files.map { file in
                 if let data = file.data {
-                    provider = .data(data)
-                } else if let url = file.fileURL {
-                    provider = .file(url)
-                } else {
-                    provider = .data(Data())
+                    return MultipartFormData(provider: MultipartFormData.FormDataProvider.data(data), name: file.name,fileName: file.fileName,mimeType: file.mimeType)
+                }else if let url = file.fileURL {
+                    return MultipartFormData(provider: MultipartFormData.FormDataProvider.file(url), name: file.name,fileName: file.fileName,mimeType: file.mimeType)
                 }
-                return MultipartFormData(provider: provider,
-                                         name: file.name,
-                                         fileName: file.fileName,
-                                         mimeType: file.mimeType)
-            })
+                return MultipartFormData(provider: MultipartFormData.FormDataProvider.data(Data()), name: file.name,fileName: file.fileName,mimeType: file.mimeType)
+            }
+            
+            return .uploadMultipart(result)
         }
         
         // 2. 处理文件下载
         if let destination = downloadDestination {
-            if let resumeData = resumeData {
-                return .downloadResuming(with: resumeData, destination: destination) // 断点续传
-            } else {
-                return .downloadDestination(destination) // 普通下载
-            }
+            return .downloadDestination(destination) // 普通下载
         }
         
         // 3. 原有JSON参数请求
@@ -120,7 +113,7 @@ extension BaseAPI {
 
 // MARK: - 下载路径便捷构造器
 /// 默认下载路径：Documents/Downloads
-func defaultDownloadDestination(fileName: String? = nil) -> DownloadDestination {
+public func defaultDownloadDestination(fileName: String? = nil) -> DownloadDestination {
     return { temporaryURL, response in
         // 创建Downloads目录
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]

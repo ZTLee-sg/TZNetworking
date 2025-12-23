@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Moya
 
 // MARK: - 请求错误状态
 public enum TZNetworkError: Error, LocalizedError {
@@ -40,7 +41,7 @@ public enum TZNetworkError: Error, LocalizedError {
 
     
     // 错误描述（适配LocalizedError）
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidURL:
             return "无效的请求地址"
@@ -86,6 +87,8 @@ extension Error {
     /// 是否为断点续传错误
     var isResumeDataError: Bool {
         let code = (self as NSError).code
-        return code == NSURLErrorCannotResumeDownload || code == NSURLErrorResumeDataCorrupted
+        // 断点续传相关错误码原始值（通用兼容所有版本）
+        return code == -3009    // NSURLErrorCannotResumeDownload
+        || code == -3010    // NSURLErrorResumeDataCorrupted
     }
 }

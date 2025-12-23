@@ -29,7 +29,7 @@ public class TZFileUtils {
     /// 获取文件大小（字节）
     static func fileSize(for fileURL: URL) -> Int64? {
         guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
-        return try? FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? Int64
+        return try! FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? Int64
     }
     
     /// 格式化文件大小（如 1.2MB、500KB）

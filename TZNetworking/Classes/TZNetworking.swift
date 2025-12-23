@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Moya
 
 public class TZNetworking: NSObject {
-    static let shared = TZNetworking()
-    private init() {}
+    public static let shared = TZNetworking()
+    private override init() {}
     
     // MARK: - 通用请求方法（解析基础模型）
     /// - Parameters:
@@ -66,12 +67,6 @@ public class TZNetworking: NSObject {
         dataType: M.Type,
         completion: @escaping (Result<M, TZNetworkError>) -> Void
     ) -> Cancellable? {
-        // 通用业务响应模型
-        struct BusinessResponse<D: Decodable>: Decodable {
-            let code: Int
-            let msg: String
-            let data: D
-        }
         
         return request(api: api, modelType: BusinessResponse<M>.self) { result in
             switch result {
@@ -87,7 +82,12 @@ public class TZNetworking: NSObject {
             }
         }
     }
-    
+    // 通用业务响应模型
+    struct BusinessResponse<D: Decodable>: Decodable {
+        let code: Int
+        let msg: String
+        let data: D
+    }
     // MARK: - 文件上传（带进度）
     @discardableResult
     func requestUpload<T: BaseAPI, M: Decodable>(
@@ -97,7 +97,7 @@ public class TZNetworking: NSObject {
         completion: @escaping (Result<M, TZNetworkError>) -> Void
     ) -> Cancellable? {
         // 1. 检查网络
-        guard NetworkReachability.shared.isReachable else {
+        guard TZNetworkReachability.shared.isReachable else {
             completion(.failure(.noNetwork))
             return nil
         }
@@ -121,7 +121,12 @@ public class TZNetworking: NSObject {
         // 3. 发起上传请求
         let provider = NetworkProvider<T>()
         let cancellable = provider.request(api, progress: { progressValue in
-            DispatchQueue.main.async { progress?(progressValue) } // 主线程更新UI
+            DispatchQueue.main.async {
+                if let progressV = progressValue.progressObject {
+                    progress?(progressV)
+                }
+                
+            }
         }) { result in
             switch result {
             case .success(let response):
@@ -149,7 +154,7 @@ public class TZNetworking: NSObject {
         completion: @escaping (Result<URL, TZNetworkError>) -> Void
     ) -> Cancellable? {
         // 1. 检查网络
-        guard NetworkReachability.shared.isReachable else {
+        guard TZNetworkReachability.shared.isReachable else {
             completion(.failure(.noNetwork))
             return nil
         }
@@ -164,7 +169,10 @@ public class TZNetworking: NSObject {
         // 3. 发起下载请求
         let provider = NetworkProvider<T>()
         let cancellable = provider.request(api, progress: { progressValue in
-            DispatchQueue.main.async { progress?(progressValue) } // 主线程更新UI
+            // 主线程更新UI
+            DispatchQueue.main.async {
+                progress?(progressValue.progressObject!)
+            }
         }) { result in
             switch result {
             case .success(let response):
@@ -176,7 +184,7 @@ public class TZNetworking: NSObject {
                         return
                     }
                     // 校验文件大小（非空）
-                    guard let fileSize = FileUtils.fileSize(for: fileURL), fileSize > 0 else {
+                    guard let fileSize = TZFileUtils.fileSize(for: fileURL), fileSize > 0 else {
                         completion(.failure(.emptyDownloadFile))
                         return
                     }
@@ -199,7 +207,7 @@ public class TZNetworking: NSObject {
     }
     
     // MARK: - 私有方法：处理MoyaError转为NetworkError
-    private func handleMoyaError(_ error: MoyaError) -> NetworkError {
+    private func handleMoyaError(_ error: MoyaError) -> TZNetworkError {
         switch error {
         case .statusCode(let resp):
             return .responseCodeError(resp.statusCode)

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Moya
+import Alamofire
 
 final class TZNetworkReachability: NSObject {
     /// 单例
@@ -15,7 +17,7 @@ final class TZNetworkReachability: NSObject {
     /// 是否有网络
     var isReachable: Bool { reachability?.isReachable ?? false }
     
-    private init() {
+    private override init() {
         // 启动监听
         reachability?.startListening(onQueue: .global(), onUpdatePerforming: { status in
             switch status {
